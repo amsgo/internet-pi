@@ -41,16 +41,9 @@
   changed_when: false
   when: resolvconf_file is changed
 
-- name: Ensure Pi-hole configuration directory exists
-  ansible.builtin.file:
-    path: "/etc/pihole"
-    state: directory
-    mode: "0755"
-  become: true
-
 - name: Ensure FTL-conf exists.
   ansible.builtin.file:
-    path: "/etc/pihole/pihole-FTL.conf"
+    path: "pi-hole/etc-pihole/pihole-FTL.conf"
     state: touch
     mode: "744"
   become: true
@@ -58,7 +51,7 @@
 - name: Update FTL-conf to allow Apple Private Relay.
   ansible.builtin.lineinfile:
     line: "BLOCK_ICLOUD_PR=false"
-    dest: "/etc/pihole/pihole-FTL.conf"
+    dest: "pi-hole/etc-pihole/pihole-FTL.conf"
     regexp: "^#?BLOCK_ICLOUD_PR="
   register: ftl_conf_file
 
